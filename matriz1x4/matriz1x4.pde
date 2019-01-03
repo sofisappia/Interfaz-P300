@@ -12,7 +12,6 @@ void setup() {
     for (int j = 0; j < rows; j++) {
       // Initialize each object
       grid[i][j] = new Cell(i*300,0,300,400,0);
-     // grid[i][j] = new Cell(i*20,j*20,20,20,i+j);
     }
   }
 }
@@ -24,7 +23,7 @@ void draw() {
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
       // Oscillate and display each object
-      grid[i][j].oscillate();
+      grid[i][j].animate();
       delay(100);
       grid[i][j].display();
     }
@@ -37,8 +36,7 @@ class Cell {
   // as well as its size with the variables x,y,w,h
   float x,y;   // x,y location
   float w,h;   // width and height
-  float angle; // angle for oscillating brightness
-  float colour;
+  float colour; // colour for animation
 
   // Cell Constructor
   Cell(float tempX, float tempY, float tempW, float tempH, float tempColour) {
@@ -46,13 +44,11 @@ class Cell {
     y = tempY;
     w = tempW;
     h = tempH;
-    //angle = tempAngle;
     colour = tempColour;
   } 
   
-  // Oscillation means increase angle
-  void oscillate() {
-    //angle += 0.02;
+  // Animation consists of changing cells colors
+  void animate() {
     if (colour == 125){
       colour = 0;
     }
