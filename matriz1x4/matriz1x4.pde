@@ -1,7 +1,7 @@
 // 2D Array of objects
 Cell[][] grid;
 Grid gr;
-int ii=0;
+int ii=int(random(4));;
 
 // Number of columns and rows in the grid
 int rows = 1;
@@ -35,7 +35,7 @@ void draw() {
   gr.display();
   gr.animate();
   delay(200);
-  ii += 1;
+  ii = int(random(4));
 
 }
 
