@@ -9,27 +9,23 @@ int cols = 4;
 // colours
 int black = 0;
 int white = 255;
+int lightGray = 125;
 
 void setup() {
   size(1200,400);
   gr = new Grid();
-  /*grid = new Cell[cols][rows];
-  for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-      // Initialize each object
-      grid[i][j] = new Cell(i*300,0,300,400,0);
-    }
-  }*/
+ 
   
 }
 
 void draw() {
-  background(black);
+  background(black, 100);
   // The counter variables i and j are also the column and row numbers and 
   // are used as arguments to the constructor for each object in the grid.  
-  gr.display();
   gr.animate();
-  delay(400);
+ // gr.display();
+  
+  delay(220);
  
 
 }
@@ -42,6 +38,10 @@ class Cell {
   float w,h;   // width and height
   float colour; // colour for animation
   String string;
+  
+  int textSizeON = 200;
+  int textSizeOFF = 100;
+  
 
   // Cell Constructor
   Cell(float tempX, float tempY, float tempW, float tempH, float tempColour, String s) {
@@ -53,26 +53,35 @@ class Cell {
     colour = tempColour;
   } 
   
-  void paintGray() {
-    colour = 125;
+  void changeColour(int tempColour){
+    colour = tempColour;
   }
   
-  void paintBlack(){
-    colour = 0;
-  }
-  
- void printText(int textColour){
-    textSize(100);
-    text(string, x+100, h/2); 
+ void printText(int textColour, int textSize){
+    textSize(textSize);
     fill(textColour);
+    textAlign(CENTER);
+    text(string, x+100, (h+textSize)/2); 
   }
  
   void display() {
-    stroke(white);
+    stroke(white, 200);
     fill(colour);
     rect(x,y,w,h);
-
   }
+  
+  void cellON(){
+    this.changeColour(lightGray);
+    this.display();
+    this.printText(white, textSizeON);  
+  }
+  
+  void cellOFF(){
+    this.changeColour(black);
+    this.display();
+    this.printText(lightGray, textSizeOFF);
+  }  
+    
 }
 
 class Grid {
@@ -88,16 +97,18 @@ class Grid {
     c3 = new Cell(600, 0, 300, 400, 0, "C");
     c4 = new Cell(900, 0, 300, 400, 0, "D");
      
-    c1.printText(white);
-    c2.printText(white);
-    c3.printText(white);
-    c4.printText(white);
+
   }
   void display(){
     c1.display();
     c2.display();
     c3.display();
     c4.display();
+    
+   /* c1.printText(white, 200);
+    c2.printText(white, 200);
+    c3.printText(white, 200);
+    c4.printText(white, 200);*/
   }
   
 
@@ -106,48 +117,32 @@ class Grid {
     ii=int(random(4));
     switch(ii){
       case 0:
-        c1.paintGray();
-        c2.paintBlack();
-        c3.paintBlack();
-        c4.paintBlack();
-
-        c1.printText(black);
-        c2.printText(white);
-        c3.printText(white);
-        c4.printText(white);        
+        c1.cellON();
+        c2.cellOFF();
+        c3.cellOFF();
+        c4.cellOFF();       
         break;
+        
        case 1:
-        c2.paintGray();
-        c1.paintBlack();
-        c3.paintBlack();
-        c4.paintBlack();
-        
-        c1.printText(white);
-        c2.printText(black);
-        c3.printText(white);
-        c4.printText(white);   
+        c2.cellON();
+        c1.cellOFF();
+        c3.cellOFF();
+        c4.cellOFF();     
         break;
+        
        case 2:
-        c3.paintGray();
-        c1.paintBlack();
-        c2.paintBlack();
-        c4.paintBlack();
-        
-        c1.printText(white);
-        c2.printText(white);
-        c3.printText(black);
-        c4.printText(white);   
+        c3.cellON();
+        c1.cellOFF();
+        c2.cellOFF();
+        c4.cellOFF();     
         break;
-       case 3:
-        c4.paintGray();
-        c1.paintBlack();
-        c2.paintBlack();
-        c3.paintBlack();
         
-        c1.printText(white);
-        c2.printText(white);
-        c3.printText(white);
-        c4.printText(black);           
+       case 3:
+        c4.cellON();
+        c1.cellOFF();
+        c2.cellOFF();
+        c3.cellOFF();   
+        
         break;
     }
   }
