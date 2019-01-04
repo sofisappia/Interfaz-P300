@@ -1,5 +1,4 @@
-// 2D Array of objects
-Cell[][] grid;
+
 Grid gr;
 
 // Number of columns and rows in the grid
@@ -14,19 +13,14 @@ int lightGray = 125;
 void setup() {
   size(1200,400);
   gr = new Grid();
- 
-  
 }
 
 void draw() {
-  background(black, 100);
-  // The counter variables i and j are also the column and row numbers and 
-  // are used as arguments to the constructor for each object in the grid.  
+  //background(black, 100);
+  gr.showTargetCell(2);
+  delay(100);
   gr.animate();
- // gr.display();
-  
   delay(220);
- 
 
 }
 
@@ -80,8 +74,14 @@ class Cell {
     this.changeColour(black);
     this.display();
     this.printText(lightGray, textSizeOFF);
-  }  
-    
+  }   
+  
+  void targetCell(){
+    stroke(white, 200);
+    fill(0,0,255);
+    rect(x,y,w,h);
+    this.printText(lightGray, textSizeON);
+  }     
 }
 
 class Grid {
@@ -96,54 +96,75 @@ class Grid {
     c2 = new Cell(300, 0, 300, 400, 0, "B");
     c3 = new Cell(600, 0, 300, 400, 0, "C");
     c4 = new Cell(900, 0, 300, 400, 0, "D");
-     
-
-  }
-  void display(){
-    c1.display();
-    c2.display();
-    c3.display();
-    c4.display();
-    
-   /* c1.printText(white, 200);
-    c2.printText(white, 200);
-    c3.printText(white, 200);
-    c4.printText(white, 200);*/
   }
   
-
+  void showTargetCell(int cell){
+    switch(cell){
+      case 1:
+      c1.targetCell();
+      c2.cellOFF();
+      c3.cellOFF();
+      c4.cellOFF();  
+      break;
+ 
+      case 2:
+      c2.targetCell();
+      c1.cellOFF();
+      c3.cellOFF();
+      c4.cellOFF();  
+      break;
+      
+      case 3:
+      c3.targetCell();
+      c1.cellOFF();
+      c2.cellOFF();
+      c4.cellOFF();  
+      break;
+      
+      case 4:
+      c4.targetCell();
+      c1.cellOFF();
+      c2.cellOFF();
+      c3.cellOFF();  
+      break;               
+    }
+    delay(1000);
+  }
   // Animation consists of changing cells colors
-  void animate(){
-    ii=int(random(4));
-    switch(ii){
+  void animate(){ 
+    switch(int(random(5))){
       case 0:
         c1.cellON();
         c2.cellOFF();
         c3.cellOFF();
-        c4.cellOFF();       
+        c4.cellOFF(); 
+        
         break;
         
        case 1:
         c2.cellON();
         c1.cellOFF();
         c3.cellOFF();
-        c4.cellOFF();     
+        c4.cellOFF();
+        
         break;
         
        case 2:
         c3.cellON();
         c1.cellOFF();
         c2.cellOFF();
-        c4.cellOFF();     
+        c4.cellOFF(); 
+        
         break;
         
        case 3:
         c4.cellON();
         c1.cellOFF();
         c2.cellOFF();
-        c3.cellOFF();   
+        c3.cellOFF(); 
         
         break;
     }
+    
   }
 }
